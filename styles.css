@@ -1,0 +1,23 @@
+* {
+    border: 1px solid red;
+}
+
+.display {
+    border: 1px solid black;
+    height: 30px;
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.buttons {
+    display: flex;
+}
+
+.column-one {
+    display: flex;
+    flex-direction: column;
+}
