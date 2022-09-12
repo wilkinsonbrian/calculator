@@ -86,6 +86,9 @@ function clickedNumber(num) {
  */
 function clickedOperator(oper) {
     if (oper === "=") {
+        if (operandOne === "") {
+            return; // ignore the equals sign until both numbers have been entered.
+        }
         equalsClicked = true;
     }
     if (operandOne === "") {
