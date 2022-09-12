@@ -6,6 +6,7 @@ let operandTwo = "";
 let equalsClicked = false;
 let prevOperator = "";
 let currentOper = "";
+let lastKeyClicked = "";
 
 function add(a, b) {
     return a + b;
@@ -39,10 +40,9 @@ function updateEntry(result, oper) {
         operandOne = "";
     } else {
         entry.textContent = result + currentOper;
-        operandOne = result;   
+        operandOne = result;  
     }
     operandTwo = "";
-    
 }
 
 
@@ -85,10 +85,6 @@ function clickedNumber(num) {
  * @param {*} oper 
  */
 function clickedOperator(oper) {
-    if (oper === "C") {
-        clear();
-        return; // ignore the rest of this function
-    }
     if (oper === "=") {
         equalsClicked = true;
     }
@@ -108,10 +104,21 @@ function clickedOperator(oper) {
 function clickedKey() {
     const clicked = this.textContent;
     currentEntry = entry.textContent;
+    if (clicked === "C") {
+        clear();
+        return; // ignore the rest of this function
+    }
     if (isNaN(clicked)) { // If an operator was clicked
-        clickedOperator(clicked);
+        if (!isNaN(lastKeyClicked)) {
+            clickedOperator(clicked);
+        }  
     } else {
         clickedNumber(clicked);
+    }
+    if (clicked === "=") {
+        lastKeyClicked = "";
+    } else {
+        lastKeyClicked = clicked;
     }
 }
 
