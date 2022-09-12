@@ -1,5 +1,7 @@
 const buttons = document.querySelectorAll('button');
 const entry = document.querySelector('.display');
+
+// Set initial states of variables
 entry.textContent = "0";
 let operandOne = "";
 let operandTwo = "";
@@ -48,8 +50,8 @@ function updateEntry(result, oper) {
 
 
 function operate(a, b, oper) {
-    a = parseInt(a);
-    b = parseInt(b);
+    a = parseFloat(a);
+    b = parseFloat(b);
     let result = 0;
     if (oper === "+") {
         result = add(a, b);
@@ -102,6 +104,7 @@ function clickedOperator(oper) {
         operate(operandOne, operandTwo, prevOperator);
         prevOperator = currentOper;
     }
+    document.getElementById("decimal").disabled = false; // Let the user enter decimals again. 
 }
 
 function clickedKey() {
@@ -111,13 +114,18 @@ function clickedKey() {
         clear();
         return; // ignore the rest of this function
     }
-    if (isNaN(clicked)) { // If an operator was clicked
+    if (clicked === ".") {
+        document.getElementById("decimal").disabled = true;
+        clickedNumber(clicked); // treat the decimal as a number, not an operator
+    }
+    else if (isNaN(clicked)) { // If an operator was clicked
         if (!isNaN(lastKeyClicked)) {
             clickedOperator(clicked);
         }  
     } else {
         clickedNumber(clicked);
     }
+
     if (clicked === "=") {
         lastKeyClicked = "";
     } else {
