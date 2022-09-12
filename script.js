@@ -5,6 +5,7 @@ let operandOne = "";
 let operandTwo = "";
 let equalsClicked = false;
 let prevOperator = "";
+let currentOper = "";
 
 function add(a, b) {
     return a + b;
@@ -22,6 +23,14 @@ function subtract(a, b) {
     return a - b;
 }
 
+function clear() {
+    entry.textContent = 0;
+    operandOne = "";
+    operandTwo = "";
+    equalsClicked = false;
+    prevOperator = "";
+}
+
 function updateEntry(result, oper) {
     if (equalsClicked) {
         equalsClicked = false;
@@ -29,7 +38,7 @@ function updateEntry(result, oper) {
         prevOperator = "";
         operandOne = "";
     } else {
-        entry.textContent = result + oper;
+        entry.textContent = result + currentOper;
         operandOne = result;   
     }
     operandTwo = "";
@@ -50,7 +59,7 @@ function operate(a, b, oper) {
         result = divide(a, b);
     } else if (oper === "*") {
         result = multiply(a, b);
-    }
+    } 
     updateEntry(result, oper);
 }
 
@@ -72,10 +81,14 @@ function clickedNumber(num) {
 
 /**
  * Assigns values to each of the operands. If the first operand is already set, looks back to the previous
- * operator and gets the text (the number) from that point on. 
+ * operator and gets the text (the number) from that index on. 
  * @param {*} oper 
  */
 function clickedOperator(oper) {
+    if (oper === "C") {
+        clear();
+        return; // ignore the rest of this function
+    }
     if (oper === "=") {
         equalsClicked = true;
     }
@@ -86,7 +99,9 @@ function clickedOperator(oper) {
     } else {
         let opIndex = entry.textContent.indexOf(prevOperator);
         operandTwo = entry.textContent.substring(opIndex+1);
+        currentOper = oper;
         operate(operandOne, operandTwo, prevOperator);
+        prevOperator = currentOper;
     }
 }
 
